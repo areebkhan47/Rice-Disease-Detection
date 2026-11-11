@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.py[cod]
+venv/
+.venv/
+.env
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Uploaded images
+backend/uploads/*
+!backend/uploads/.gitkeep
+
+# Generated files
+*.log
+.DS_Store
+
+# IDE
+.vscode/
