@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>RiceGuard | Rice Disease Detection</title>
+
+    <link rel="stylesheet" href="/static/style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <header class="navbar">
+
+        <div class="nav-container">
+
+            <a href="/" class="brand">
+                <div class="brand-icon">🌾</div>
+
+                <div>
+                    <h2>RiceGuard</h2>
+                    <span>SMART CROP PROTECTION</span>
+                </div>
+            </a>
+
+            <div class="nav-status">
+                <span class="status-dot"></span>
+                AI System Online
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- Hero Section -->
+    <main class="container">
+
+        <section class="hero">
+
+            <div class="hero-badge">
+                <span>✦</span> AI-POWERED CROP HEALTH ANALYSIS
+            </div>
+
+            <h1>
+                Protect Your Rice.<br>
+                <span>Detect Diseases Early.</span>
+            </h1>
+
+            <p>
+                Upload a photograph of a rice leaf and let our AI-powered
+                detection system identify potential diseases and provide
+                useful crop management recommendations.
+            </p>
+
+        </section>
+
+
+        <!-- Main Dashboard -->
+        <section class="dashboard">
+
+            <!-- Upload Card -->
+            <div class="card upload-card">
+
+                <div class="section-heading">
+
+                    <div class="heading-icon">📷</div>
+
+                    <div>
+                        <h2>Analyze Rice Leaf</h2>
+                        <p>Upload an image to detect possible diseases.</p>
+                    </div>
+
+                </div>
+
+
+                <!-- Upload Area -->
+                <div class="upload-area" id="uploadArea">
+
+                    <input
+                        type="file"
+                        id="imageInput"
+                        accept="image/jpeg,image/png,image/webp"
+                        hidden
+                    >
+
+                    <div id="uploadPlaceholder">
+
+                        <div class="upload-icon">☁️</div>
+
+                        <h3>Drop your rice leaf image here</h3>
+
+                        <p>or click below to browse files</p>
+
+                        <button type="button" class="browse-btn" id="browseBtn">
+                            Browse Images
+                        </button>
+
+                        <span class="file-info">
+                            JPG, PNG or WEBP · Maximum 8 MB
+                        </span>
+
+                    </div>
+
+
+                    <!-- Image Preview -->
+                    <div id="previewContainer" class="preview-container hidden">
+
+                        <img id="imagePreview" src="" alt="Selected rice leaf">
+
+                        <button type="button" id="removeImage" class="remove-btn">
+                            ✕
+                        </button>
+
+                        <div class="preview-label">
+                            Image ready for analysis
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <button id="analyzeBtn" class="analyze-btn" disabled>
+
+                    <span id="buttonText">✦ Analyze Image</span>
+
+                    <span id="buttonLoader" class="loader hidden"></span>
+
+                </button>
+
+                <p class="upload-note">
+                    🔒 Your uploaded image is processed locally by the detection server.
+                </p>
+
+                <div id="errorMessage" class="error-message hidden"></div>
+
+            </div>
+
+
+            <!-- Information Card -->
+            <div class="card info-card">
+
+                <div class="section-heading">
+
+                    <div class="heading-icon">🧬</div>
+
+                    <div>
+                        <h2>Detection Capabilities</h2>
+                        <p>Six rice leaf categories supported by AI.</p>
+                    </div>
+
+                </div>
+
+
+                <div class="disease-list">
+
+                    <div class="disease-item">
+                        <span class="disease-symbol red">●</span>
+                        <span>Bacterial Leaf Blight</span>
+                    </div>
+
+                    <div class="disease-item">
+                        <span class="disease-symbol orange">●</span>
+                        <span>Brown Spot</span>
+                    </div>
+
+                    <div class="disease-item">
+                        <span class="disease-symbol green">●</span>
+                        <span>Healthy Rice Leaf</span>
+                    </div>
+
+                    <div class="disease-item">
+                        <span class="disease-symbol purple">●</span>
+                        <span>Leaf Blast</span>
+                    </div>
+
+                    <div class="disease-item">
+                        <span class="disease-symbol yellow">●</span>
+                        <span>Leaf Scald</span>
+                    </div>
+
+                    <div class="disease-item">
+                        <span class="disease-symbol blue">●</span>
+                        <span>Sheath Blight</span>
+                    </div>
+
+                </div>
+
+
+                <div class="info-footer">
+
+                    <span>⚡</span>
+
+                    <div>
+                        <strong>AI-powered analysis</strong>
+                        <p>Automated image classification using MobileNetV2.</p>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Loading Section -->
+        <section id="loadingSection" class="loading-section hidden">
+
+            <div class="loading-spinner"></div>
+
+            <h3>Analyzing your rice leaf...</h3>
+
+            <p>Our AI model is examining the image.</p>
+
+        </section>
+
+
+        <!-- Results Section -->
+        <section id="resultsSection" class="results-section hidden">
+
+            <div class="results-header">
+
+                <div>
+                    <span class="result-label">ANALYSIS COMPLETE</span>
+                    <h2>Detection Results</h2>
+                    <p>Here is the result generated by the AI model.</p>
+                </div>
+
+                <button id="newAnalysisBtn" class="secondary-btn">
+                    + New Analysis
+                </button>
+
+            </div>
+
+
+            <div class="result-grid">
+
+                <!-- Prediction -->
+                <div class="card prediction-card">
+
+                    <div class="result-top">
+                        <span>IDENTIFIED CATEGORY</span>
+                        <span id="statusBadge" class="status-badge"></span>
+                    </div>
+
+                    <h2 id="predictionName">Leaf Blast</h2>
+
+                    <p id="predictionDescription"></p>
+
+                    <div class="confidence-box">
+
+                        <div class="confidence-heading">
+                            <span>Model Score</span>
+                            <strong id="confidenceValue">0%</strong>
+                        </div>
+
+                        <div class="progress-track">
+                            <div id="confidenceBar" class="progress-bar"></div>
+                        </div>
+
+                        <small>Top predicted class score, not a calibrated probability.</small>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Management -->
+                <div class="card management-card">
+
+                    <div class="section-heading">
+
+                        <div class="heading-icon">🌱</div>
+
+                        <div>
+                            <h2>Management Recommendations</h2>
+                            <p>Suggested actions for crop management.</p>
+                        </div>
+
+                    </div>
+
+                    <ul id="managementList" class="management-list"></ul>
+
+                </div>
+
+            </div>
+
+
+            <div class="disclaimer-box">
+                <strong>⚠ Important Disclaimer</strong>
+
+                <p id="disclaimerText">
+                    AI-generated predictions are for guidance only.
+                    They are not confirmed agricultural diagnoses.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- About Section -->
+        <section class="about-section">
+
+            <div class="about-content">
+
+                <span class="result-label">ABOUT THE PROJECT</span>
+
+                <h2>Technology for healthier rice crops.</h2>
+
+                <p>
+                    RiceGuard uses a deep learning image classification model
+                    based on MobileNetV2 to identify six rice leaf categories.
+                    It aims to support early awareness of potential crop diseases
+                    through image-based analysis.
+                </p>
+
+            </div>
+
+            <div class="about-stat">
+                <strong>06</strong>
+                <span>Detection Classes</span>
+            </div>
+
+            <div class="about-stat">
+                <strong>AI</strong>
+                <span>Deep Learning</span>
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- Footer -->
+    <footer class="footer">
+
+        <p>
+            © 2026 RiceGuard · AI-Based Rice Disease Detection System
+        </p>
+
+        <span>Built for smarter agriculture 🌾</span>
+
+    </footer>
+
+
+    <script src="/static/script.js"></script>
+
+</body>
+
+</html>

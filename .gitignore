@@ -1,20 +1,33 @@
 # Python
 __pycache__/
 *.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+.pytest_cache/
+
+# Virtual environments
 venv/
 .venv/
+backend/venv/
+
+# Environment variables
 .env
-
-# Jupyter
-.ipynb_checkpoints/
-
-# Uploaded images
-backend/uploads/*
-!backend/uploads/.gitkeep
-
-# Generated files
-*.log
-.DS_Store
+.env.*
 
 # IDE
 .vscode/
+.idea/
+
+# Logs
+*.log
+
+# Temporary files
+.DS_Store
+Thumbs.db
+
+# Uploads
+backend/uploads/*
+
+# Keep upload folder structure
+!backend/uploads/.gitkeep
